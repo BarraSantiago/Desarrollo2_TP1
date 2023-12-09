@@ -1,5 +1,5 @@
 using Audio;
-using Targets;
+using Enemy;
 using UnityEngine;
 
 namespace Weapons
