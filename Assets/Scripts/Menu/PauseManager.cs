@@ -1,4 +1,5 @@
 using Game;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -22,7 +23,7 @@ namespace Menu
             resumeButton.Select();
             if (canWin)
             {
-                GameManager.OnDefeatEvent += OnGameEnd;
+                PlayerController.OnDefeatEvent += OnGameEnd;
                 GameManager.OnWinEvent += OnGameEnd;
             }
         }
@@ -31,7 +32,7 @@ namespace Menu
         {
             if (canWin)
             {
-                GameManager.OnDefeatEvent -= OnGameEnd;
+                PlayerController.OnDefeatEvent -= OnGameEnd;
                 GameManager.OnWinEvent -= OnGameEnd;
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using Game;
+using Player;
 using UnityEngine;
 
 namespace Audio
@@ -13,13 +14,13 @@ namespace Audio
         private void Start()
         {
             GameManager.OnWinEvent += PlayWinSound;
-            GameManager.OnDefeatEvent += PlayLoseSound;
+            PlayerController.OnDefeatEvent += PlayLoseSound;
         }
 
         private void OnDestroy()
         {
             GameManager.OnWinEvent -= PlayWinSound;
-            GameManager.OnDefeatEvent -= PlayLoseSound;   
+            PlayerController.OnDefeatEvent -= PlayLoseSound;   
         }
 
         /// <summary>

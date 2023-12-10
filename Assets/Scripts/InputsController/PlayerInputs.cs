@@ -98,6 +98,42 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""04297380-4e4e-46f3-8625-03c458fe3af0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GodMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f70e9af-1a14-4e87-be84-cc1efd81df86"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Flash"",
+                    ""type"": ""Button"",
+                    ""id"": ""5442749a-5ed6-4d09-816e-75e38ed1f9bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Nuke"",
+                    ""type"": ""Button"",
+                    ""id"": ""677e4729-96a7-4293-9c9e-ce357b2aa6a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -386,6 +422,50 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Drop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3186a79-7c65-43ce-bf3e-09471d7e9292"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""985e663f-4962-4cd5-8cdf-e3be1c54625f"",
+                    ""path"": ""<Keyboard>/f10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GodMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b798332-27ca-4e10-96b7-5f1b8aca1d14"",
+                    ""path"": ""<Keyboard>/f11"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Flash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70fe38c0-5883-4ff9-98eb-9d778c50f12f"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Nuke"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -441,6 +521,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_World_Drop = m_World.FindAction("Drop", throwIfNotFound: true);
         m_World_SwapWeapon = m_World.FindAction("SwapWeapon", throwIfNotFound: true);
         m_World_Reload = m_World.FindAction("Reload", throwIfNotFound: true);
+        m_World_NextLevel = m_World.FindAction("NextLevel", throwIfNotFound: true);
+        m_World_GodMode = m_World.FindAction("GodMode", throwIfNotFound: true);
+        m_World_Flash = m_World.FindAction("Flash", throwIfNotFound: true);
+        m_World_Nuke = m_World.FindAction("Nuke", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Pause = m_Menu.FindAction("Pause", throwIfNotFound: true);
@@ -513,6 +597,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_World_Drop;
     private readonly InputAction m_World_SwapWeapon;
     private readonly InputAction m_World_Reload;
+    private readonly InputAction m_World_NextLevel;
+    private readonly InputAction m_World_GodMode;
+    private readonly InputAction m_World_Flash;
+    private readonly InputAction m_World_Nuke;
     public struct WorldActions
     {
         private @PlayerInputs m_Wrapper;
@@ -525,6 +613,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_World_Drop;
         public InputAction @SwapWeapon => m_Wrapper.m_World_SwapWeapon;
         public InputAction @Reload => m_Wrapper.m_World_Reload;
+        public InputAction @NextLevel => m_Wrapper.m_World_NextLevel;
+        public InputAction @GodMode => m_Wrapper.m_World_GodMode;
+        public InputAction @Flash => m_Wrapper.m_World_Flash;
+        public InputAction @Nuke => m_Wrapper.m_World_Nuke;
         public InputActionMap Get() { return m_Wrapper.m_World; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -558,6 +650,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @NextLevel.started += instance.OnNextLevel;
+            @NextLevel.performed += instance.OnNextLevel;
+            @NextLevel.canceled += instance.OnNextLevel;
+            @GodMode.started += instance.OnGodMode;
+            @GodMode.performed += instance.OnGodMode;
+            @GodMode.canceled += instance.OnGodMode;
+            @Flash.started += instance.OnFlash;
+            @Flash.performed += instance.OnFlash;
+            @Flash.canceled += instance.OnFlash;
+            @Nuke.started += instance.OnNuke;
+            @Nuke.performed += instance.OnNuke;
+            @Nuke.canceled += instance.OnNuke;
         }
 
         private void UnregisterCallbacks(IWorldActions instance)
@@ -586,6 +690,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @NextLevel.started -= instance.OnNextLevel;
+            @NextLevel.performed -= instance.OnNextLevel;
+            @NextLevel.canceled -= instance.OnNextLevel;
+            @GodMode.started -= instance.OnGodMode;
+            @GodMode.performed -= instance.OnGodMode;
+            @GodMode.canceled -= instance.OnGodMode;
+            @Flash.started -= instance.OnFlash;
+            @Flash.performed -= instance.OnFlash;
+            @Flash.canceled -= instance.OnFlash;
+            @Nuke.started -= instance.OnNuke;
+            @Nuke.performed -= instance.OnNuke;
+            @Nuke.canceled -= instance.OnNuke;
         }
 
         public void RemoveCallbacks(IWorldActions instance)
@@ -659,6 +775,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnSwapWeapon(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnNextLevel(InputAction.CallbackContext context);
+        void OnGodMode(InputAction.CallbackContext context);
+        void OnFlash(InputAction.CallbackContext context);
+        void OnNuke(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

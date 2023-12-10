@@ -1,4 +1,5 @@
 ﻿using Game;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,12 @@ namespace Menu
         [SerializeField] private Button restartLevel;
         private void Start()
         {
-            GameManager.OnDefeatEvent += GameOver;
+            PlayerController.OnDefeatEvent += GameOver;
         }
 
         private void OnDestroy()
         {
-            GameManager.OnDefeatEvent -= GameOver;
+            PlayerController.OnDefeatEvent -= GameOver;
         }
 
         /// <summary>

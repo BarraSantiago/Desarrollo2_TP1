@@ -4,6 +4,7 @@ using Game;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -14,7 +15,7 @@ namespace UI
         [SerializeField] private TMP_Text timer;
         [SerializeField] private TMP_Text targetsRemaining;
         [SerializeField] private TMP_Text bulletsCounter;
-        [SerializeField] private GameManager gameManager;
+        [SerializeField] private PlayerController player;
 
         private int targetAmount;
         private bool isgameManagerNull;
@@ -23,7 +24,7 @@ namespace UI
         private void Start()
         {
             weaponContainer = FindObjectOfType<WeaponContainer>();
-            isgameManagerNull = gameManager == null;
+            isgameManagerNull = player == null;
 
             Target.OnTargetDeath += UpdateRemainingTargets;
             InputManager.OnShootEvent += ShowBullets;
@@ -57,8 +58,8 @@ namespace UI
         private void ShowTimer()
         {
             if(isgameManagerNull) return;
-            if (gameManager.Timer < 0) timer.text = "";
-            timer.text = gameManager.Timer.ToString("0.#");
+            if (player.Timer < 0) timer.text = "";
+            timer.text = player.Timer.ToString("0.#");
         }
 
         private void UpdateRemainingTargets()

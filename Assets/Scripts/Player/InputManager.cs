@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Weapons;
 
 namespace Player
@@ -14,7 +15,10 @@ namespace Player
         public static Action OnPickUpEvent;
         public static Action OnDropEvent;
         public static Action OnSwapWeaponEvent;
-
+        public static Action OnNukeEvent;
+        public static Action OnFlashEvent;
+        public static Action OnGodModeEvent;
+        
         #endregion
 
         [SerializeField] private CameraController cameraController;
@@ -105,6 +109,49 @@ namespace Player
         {
             Vector2 cameraMovement = context.Get<Vector2>();
             cameraController.MoveCamera(cameraMovement);
+        }
+
+        /// <summary>
+        /// Cheat to change to the next scene, if its the last, go back to the first scene.
+        /// </summary>
+        public void OnNextLevel()
+        {
+            const int firstSceneIndex = 0;
+            int totalScenes = SceneManager.sceneCountInBuildSettings;
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            if (currentSceneIndex < totalScenes - 1)
+            {
+                SceneManager.LoadScene(currentSceneIndex + 1);
+            }
+            else
+            {
+                SceneManager.LoadScene(firstSceneIndex);
+            }
+        }
+
+        /// <summary>
+        /// Cheat to enable or disable invincibility
+        /// </summary>
+        public void OnGodMode()
+        {
+            OnGodModeEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// Cheat to increase speed or go back to original speed
+        /// </summary>
+        public void OnFlash()
+        {
+            OnFlashEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// Cheat to kill all targets
+        /// </summary>
+        public void OnNuke()
+        {
+            OnNukeEvent?.Invoke();
         }
     }
 }

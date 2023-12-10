@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Movements;
+using Player;
 using UnityEngine;
 
 namespace Enemy
@@ -33,6 +34,16 @@ namespace Enemy
         private void Awake()
         {
             originalPosition = transform.position;
+        }
+
+        private void OnEnable()
+        {
+            InputManager.OnNukeEvent += Die;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.OnNukeEvent -= Die;
         }
 
         private void Start()
