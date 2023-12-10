@@ -29943,6 +29943,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 227203168}
+    - target: {fileID: 9105974073283466550, guid: 7889f089da8201545b838e30b1ed16c5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 9105974073283466551, guid: 7889f089da8201545b838e30b1ed16c5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.811

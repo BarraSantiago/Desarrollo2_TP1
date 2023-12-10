@@ -19,7 +19,6 @@ namespace Enemy
         [SerializeField] private float attackDuration = 0.35f;
 
         private bool isMovementNull;
-        private float timer = 0;
 
         private void Start()
         {
