@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48071ef3dff431d817b8abc1c01ca6b, type: 3}
   m_Name: chasePlayer
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  animator: {fileID: 0}
-  reachRange: 0
-  rotationSpeed: 2
+  rotationSpeed: 4

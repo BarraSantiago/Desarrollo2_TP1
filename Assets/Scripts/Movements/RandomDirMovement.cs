@@ -3,8 +3,8 @@ using UnityEngine.Serialization;
 
 namespace Movements
 {
-    [CreateAssetMenu(fileName = "movement", menuName = "movements/Zombie")]
-    public class ZombieMovement : Movement
+    [CreateAssetMenu(fileName = "movement", menuName = "movements/Random")]
+    public class RandomDirMovement : Movement
     {
         [SerializeField] private float maxTime = 4;
 
@@ -14,11 +14,11 @@ namespace Movements
         private float angle;
 
         public override void Move(Transform transform, Vector3 originalPos, ref bool direction, float speed,
-            float distance,
-            ref float distanceTraveled, float acceleration, float ogSpeed, float maxSpeed, Animator animator)
+            float distance, ref float distanceTraveled, float acceleration, float ogSpeed, float maxSpeed, 
+            Animator animator)
         {
             const string walkKey = "walk";
-            const string runKey = "walk";
+            const string runKey = "run";
             
             animator.SetBool(runKey, false);
             
@@ -44,7 +44,7 @@ namespace Movements
                     break;
 
                 case 2:
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, this.direction, 0.5f);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, this.direction, speed);
                     transform.Translate(Vector3.forward * Time.deltaTime);
                     animator.SetBool(walkKey, true);
                     break;

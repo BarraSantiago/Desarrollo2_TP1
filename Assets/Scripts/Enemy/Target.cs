@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Movements;
 using UnityEngine;
 
@@ -7,33 +8,37 @@ namespace Enemy
     public class Target : MonoBehaviour
     {
         public static Action OnTargetDeath;
+        public Vector3 originalPosition;
 
         [Header("Targets configuration")] [SerializeField]
-        private Movement movement;
+        public Movement movement;
 
         [SerializeField] private float speed = 5f;
         [SerializeField] private float moveDistance = 5f;
         [SerializeField] private float health = 50f;
+        [SerializeField] private Animator animator;
 
         [Header("Acceleration options")] [SerializeField]
         private float acceleration = 1f;
 
         [SerializeField] private float maxSpeed = 10f;
-        [SerializeField] private Animator animator;
 
         private float distanceTraveled = 0;
         private float originalSpeed;
         private bool direction = true;
 
-        private Vector3 originalPosition;
         private bool isMovementNotNull;
+        private const string AttackKey = "attack";
 
+        private void Awake()
+        {
+            originalPosition = transform.position;
+        }
 
         private void Start()
         {
             isMovementNotNull = movement != null;
             originalSpeed = speed;
-            originalPosition = transform.position;
         }
 
         private void Update()
@@ -55,6 +60,22 @@ namespace Enemy
                 Die();
             }
         }
+
+        public void StartAttack()
+        {
+            animator.SetBool(AttackKey, true);
+            StartCoroutine(EndAttack());
+        }
+
+        private IEnumerator EndAttack()
+        {
+            float delay = 0.35f;
+
+            yield return new WaitForSeconds(delay);
+
+            animator.SetBool(AttackKey, false);
+        }
+
 
         /// <summary>
         /// On death, invoke event and destroy object.

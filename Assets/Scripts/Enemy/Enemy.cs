@@ -1,62 +1,58 @@
-﻿using System;
+﻿using System.Collections;
 using Movements;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        public static Action OnTargetDeath;
+        [SerializeField] private Target target;
 
-        [Header("Targets configuration")] 
-        [SerializeField] private Movement idleMovement;
+        [Header("Enemy configuration")] [SerializeField]
+        private Movement idleMovement;
+
         [SerializeField] private Movement chaseMovement;
+        [SerializeField] private Movement staticMovement;
         [SerializeField] private Transform player;
-        [SerializeField] private Animator animator;
+        [SerializeField] private float chaseRange = 10;
+        [SerializeField] private float attackRange = 2;
+        [SerializeField] private float attackDuration = 0.35f;
 
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float moveDistance = 5f;
-        [SerializeField] private float health = 50f;
-
-        [Header("Acceleration options")] [SerializeField]
-        private float acceleration = 1f;
-
-        [SerializeField] private float maxSpeed = 10f;
-
-        private float distanceTraveled = 0;
-        private float originalSpeed;
-        private bool direction = true;
-
-        private Vector3 originalPosition;
         private bool isMovementNull;
-
+        private float timer = 0;
 
         private void Start()
         {
-            isMovementNull = idleMovement == null;
-            originalSpeed = speed;
-            originalPosition = transform.position;
+            isMovementNull = idleMovement == null || chaseMovement == null;
+
+            StartCoroutine(EnemyBehavior());
         }
 
-        private void Update()
+        private IEnumerator EnemyBehavior()
         {
-            if (isMovementNull) return;
-            
-            if (Vector3.Distance(transform.position, player.position) > 5)
+            while (!isMovementNull)
             {
-                Move(idleMovement);
-            }
-            else
-            {
-                Move(chaseMovement);
-            }
-        }
+                if (Vector3.Distance(transform.position, player.position) > chaseRange)
+                {
+                    target.movement = idleMovement;
+                }
+                else
+                {
+                    target.originalPosition = player.position;
+                    if (Vector3.Distance(transform.position, player.position) > attackRange)
+                    {
+                        target.movement = chaseMovement;
+                    }
+                    else
+                    {
+                        target.movement = staticMovement;
+                        target.StartAttack();
+                        yield return new WaitForSeconds(attackDuration);
+                    }
+                }
 
-        private void Move(Movement movement)
-        {
-            movement.Move(transform, player.transform.position, ref direction, speed, moveDistance, ref distanceTraveled,
-                acceleration, originalSpeed, maxSpeed, animator);
+                yield return null;
+            }
         }
     }
 }

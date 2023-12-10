@@ -7,7 +7,6 @@ namespace Movements
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Chase")]
     public class ChaseMovement : Movement
     {
-        [SerializeField] private float reachRange;
         [SerializeField] private float rotationSpeed = 2;
 
         public override void Move(Transform transform, Vector3 originalPos, ref bool direction, float speed, float distance,
