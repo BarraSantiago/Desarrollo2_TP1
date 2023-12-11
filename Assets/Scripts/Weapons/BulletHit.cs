@@ -23,7 +23,7 @@ namespace Weapons
                 onBulletHit.Raise();
             }
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
