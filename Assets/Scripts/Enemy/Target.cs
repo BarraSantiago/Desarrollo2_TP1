@@ -3,17 +3,17 @@ using System.Collections;
 using Movements;
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Enemy
 {
     public class Target : MonoBehaviour
     {
         public static Action OnTargetDeath;
-        public Vector3 originalPosition;
-
         [Header("Targets configuration")] [SerializeField]
         public Movement movement;
 
+        [SerializeField] private Transform chaseObjective;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float moveDistance = 5f;
         [SerializeField] private float health = 50f;
@@ -24,18 +24,21 @@ namespace Enemy
 
         [SerializeField] private float maxSpeed = 10f;
 
+        private Vector3 originalPosition;
         private float distanceTraveled = 0;
         private float originalSpeed;
         private bool direction = true;
 
         private bool isMovementNotNull;
         private bool isAttacking;
+        private bool chase;
         private const string AttackKey = "attack";
         private static readonly int Attack = Animator.StringToHash(AttackKey);
 
         private void Awake()
         {
             originalPosition = transform.position;
+            chase = chaseObjective != null;
         }
 
         private void OnEnable()
@@ -57,8 +60,8 @@ namespace Enemy
         private void Update()
         {
             if (isMovementNotNull)
-                movement.Move(transform, originalPosition, ref direction, speed, moveDistance, ref distanceTraveled,
-                    acceleration, originalSpeed, maxSpeed, animator);
+                movement.Move(transform, chase ? chaseObjective.position : originalPosition, ref direction, speed, 
+                    moveDistance, ref distanceTraveled, acceleration, originalSpeed, maxSpeed, animator);
         }
 
         /// <summary>

@@ -21,7 +21,9 @@ namespace Enemy
 
         private bool isMovementNull;
         private bool isAttacking;
-
+        private enum EnemyState { Idle, Chase, Attack }
+        private EnemyState currentState = EnemyState.Idle;
+        private float distanceToPlayer;
         private void Start()
         {
             isMovementNull = idleMovement == null || chaseMovement == null;
@@ -35,41 +37,81 @@ namespace Enemy
 
         private void EnemyBehavior()
         {
-            if (!isMovementNull && !isAttacking)
+            distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            
+            switch (currentState)
             {
-                if (Vector3.Distance(transform.position, player.position) > chaseRange)
+                case EnemyState.Idle:
+                    IdleBehavior();
+                    break;
+                case EnemyState.Chase:
+                    ChaseBehavior();
+                    break;
+                case EnemyState.Attack:
+                    // Attack behavior is now handled by the coroutine
+                    break;
+            }
+            
+            /*
+            if (distanceToPlayer > chaseRange)
+            {
+                target.movement = idleMovement;
+            }
+            else
+            {
+                target.originalPosition = player.position;
+                    
+                if (distanceToPlayer > attackRange)
                 {
-                    target.movement = idleMovement;
+                    target.movement = chaseMovement;
                 }
                 else
                 {
-                    target.originalPosition = player.position;
-                    
-                    if (Vector3.Distance(transform.position, player.position) > attackRange)
-                    {
-                        target.movement = chaseMovement;
-                    }
-                    else
-                    {
-                        target.movement = staticMovement;
-                        target.StartAttack();
+                    target.movement = staticMovement;
+                    target.StartAttack();
 
-                        StartCoroutine(Attacking());
-                    }
+                    StartCoroutine(Attacking());
                 }
+            }*/
+        }
+        private void IdleBehavior()
+        {
+            if (distanceToPlayer <= chaseRange)
+            {
+                currentState = EnemyState.Chase;
             }
+            target.movement = idleMovement;
         }
 
+        private void ChaseBehavior()
+        {
+            if (distanceToPlayer > chaseRange)
+            {
+                currentState = EnemyState.Idle;
+            }
+            else if (distanceToPlayer <= attackRange && !isAttacking)
+            {
+                currentState = EnemyState.Attack;
+                StartCoroutine(Attacking());
+            }
+            else
+            {
+                target.movement = chaseMovement;
+            }
+        }
         /// <summary>
         /// attack duration
         /// </summary>
-        /// <returns></returns>
         private IEnumerator Attacking()
         {
             isAttacking = true;
+            target.movement = staticMovement;
+            target.StartAttack();
+            
             yield return new WaitForSeconds(attackDuration);
-
+            
             isAttacking = false;
+            currentState = EnemyState.Idle;
         }
     }
 }
