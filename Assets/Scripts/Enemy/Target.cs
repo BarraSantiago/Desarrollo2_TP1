@@ -29,7 +29,9 @@ namespace Enemy
         private bool direction = true;
 
         private bool isMovementNotNull;
+        private bool isAttacking;
         private const string AttackKey = "attack";
+        private static readonly int Attack = Animator.StringToHash(AttackKey);
 
         private void Awake()
         {
@@ -66,6 +68,7 @@ namespace Enemy
         public void TakeDamage(float amount)
         {
             health -= amount;
+            
             if (health <= 0)
             {
                 Die();
@@ -74,17 +77,20 @@ namespace Enemy
 
         public void StartAttack()
         {
-            animator.SetBool(AttackKey, true);
-            StartCoroutine(EndAttack());
+            if(!isAttacking) StartCoroutine(EndAttack());
         }
 
         private IEnumerator EndAttack()
         {
-            float delay = 0.35f;
+            float delay = 0.5f;
+
+            isAttacking = true;
+            animator.SetBool(Attack, true);
 
             yield return new WaitForSeconds(delay);
 
-            animator.SetBool(AttackKey, false);
+            isAttacking = false;
+            animator.SetBool(Attack, false);
         }
 
 

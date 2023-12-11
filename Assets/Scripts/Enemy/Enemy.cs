@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Movements;
 using UnityEngine;
 
@@ -19,17 +20,22 @@ namespace Enemy
         [SerializeField] private float attackDuration = 0.35f;
 
         private bool isMovementNull;
+        private bool isAttacking;
 
         private void Start()
         {
             isMovementNull = idleMovement == null || chaseMovement == null;
-
-            StartCoroutine(EnemyBehavior());
+            
         }
 
-        private IEnumerator EnemyBehavior()
+        private void Update()
         {
-            while (!isMovementNull)
+            EnemyBehavior();
+        }
+
+        private void EnemyBehavior()
+        {
+            if (!isMovementNull && !isAttacking)
             {
                 if (Vector3.Distance(transform.position, player.position) > chaseRange)
                 {
@@ -38,6 +44,7 @@ namespace Enemy
                 else
                 {
                     target.originalPosition = player.position;
+                    
                     if (Vector3.Distance(transform.position, player.position) > attackRange)
                     {
                         target.movement = chaseMovement;
@@ -46,12 +53,23 @@ namespace Enemy
                     {
                         target.movement = staticMovement;
                         target.StartAttack();
-                        yield return new WaitForSeconds(attackDuration);
+
+                        StartCoroutine(Attacking());
                     }
                 }
-
-                yield return null;
             }
+        }
+
+        /// <summary>
+        /// attack duration
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator Attacking()
+        {
+            isAttacking = true;
+            yield return new WaitForSeconds(attackDuration);
+
+            isAttacking = false;
         }
     }
 }

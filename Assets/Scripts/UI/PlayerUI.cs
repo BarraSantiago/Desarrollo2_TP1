@@ -18,13 +18,13 @@ namespace UI
         [SerializeField] private PlayerController player;
 
         private int targetAmount;
-        private bool isgameManagerNull;
+        private bool isPlayerNull;
         private WeaponContainer weaponContainer;
 
         private void Start()
         {
             weaponContainer = FindObjectOfType<WeaponContainer>();
-            isgameManagerNull = player == null;
+            isPlayerNull = player == null;
 
             Target.OnTargetDeath += UpdateRemainingTargets;
             InputManager.OnShootEvent += ShowBullets;
@@ -57,7 +57,7 @@ namespace UI
         /// </summary>
         private void ShowTimer()
         {
-            if(isgameManagerNull) return;
+            if(isPlayerNull) return;
             if (player.Timer < 0) timer.text = "";
             timer.text = player.Timer.ToString("0.#");
         }

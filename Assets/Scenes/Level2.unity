@@ -27229,8 +27229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f93ca94fe6e95a4599e5c9a01ce2a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimer: 0
-  levelTimer: 45
 --- !u!4 &1953752300
 Transform:
   m_ObjectHideFlags: 0
@@ -28873,6 +28871,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7025749540019815010}
+    - target: {fileID: 1418748054, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+      propertyPath: attackRange
+      value: 1.85
+      objectReference: {fileID: 0}
     - target: {fileID: 578376449398627443, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -28923,6 +28925,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+--- !u!1 &2103986268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8103067124237306251, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+  m_PrefabInstance: {fileID: 2103986267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2103986269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7919196358131396253, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+  m_PrefabInstance: {fileID: 2103986267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2103986270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103986268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df25e3eb0444fca0ce0dc46b1237c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2.5
+--- !u!114 &2103986271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103986269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df25e3eb0444fca0ce0dc46b1237c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2.5
 --- !u!1001 &2110537307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30193,6 +30231,10 @@ PrefabInstance:
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 8552921364691488969}
+    - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 7025749540019815012}
     - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
       propertyPath: gameManager
       value: 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Enemy;
 using UnityEngine;
 
 namespace Player
@@ -12,13 +13,16 @@ namespace Player
     {
         public bool IsSprinting { get; set; }
         public float Timer { get; set; }
-        
+
         public static Action OnDefeatEvent;
-        
-        [Header("Player settings")]
-        [SerializeField] private float sprintingSpeed = 13.0f;
+        public static Action OnRecieveDamageEvent;
+
+        [Header("Player settings")] [SerializeField]
+        private float sprintingSpeed = 13.0f;
+
         [SerializeField] private float walkingSpeed = 8.0f;
         [SerializeField] private float flashSpeedMultiplier = 3.0f;
+        [SerializeField] private float invulnerabilityTimer = 0.2f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private CharacterController characterController;
 
@@ -32,23 +36,26 @@ namespace Player
 
         private bool isFlashMode;
         private bool isGodMode;
+        private bool isInvulnerable;
 
         private void OnEnable()
         {
             InputManager.OnFlashEvent += FlashMode;
             InputManager.OnGodModeEvent += GodMode;
+            MeleeAttack.OnDealDamageEvent += RecieveDamage;
         }
 
         private void OnDisable()
         {
             InputManager.OnFlashEvent -= FlashMode;
             InputManager.OnGodModeEvent -= GodMode;
+            MeleeAttack.OnDealDamageEvent -= RecieveDamage;
         }
 
         private void Start()
         {
             if (Camera.main != null) cameraTransform = Camera.main.transform;
-            
+
             Timer = levelTimer;
 
             if (startTimer)
@@ -112,25 +119,53 @@ namespace Player
         {
             isGodMode = !isGodMode;
         }
-        
+
         /// <summary>
         /// Calculates time remaining until the player loses
         /// </summary>
         /// <returns></returns>
         private IEnumerator TimerCoroutine()
         {
-            if(isGodMode) yield break;
-            
+            if (isGodMode) yield break;
+
             while (Timer > 0)
             {
                 Timer -= Time.deltaTime;
                 yield return null;
             }
-            
-            if ((Timer > 0)) yield break;
-            
+
+            if (Timer > 0) yield break;
+
             OnDefeatEvent?.Invoke();
             gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Reduces the player timer
+        /// </summary>
+        /// <param name="damage"> Amount of time decreased from player's timer </param>
+        private void RecieveDamage(float damage)
+        {
+            if (!isInvulnerable && !isGodMode)
+            {
+                Timer -= damage;
+                OnRecieveDamageEvent?.Invoke();
+                
+                StartCoroutine(Invulnerability());
+            }
+        }
+
+        /// <summary>
+        /// Makes the player invulnerable for a time
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator Invulnerability()
+        {
+            isInvulnerable = true;
+
+            yield return new WaitForSeconds(invulnerabilityTimer);
+
+            isInvulnerable = false;
         }
     }
 }
