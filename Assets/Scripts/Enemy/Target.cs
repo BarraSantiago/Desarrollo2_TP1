@@ -3,21 +3,22 @@ using System.Collections;
 using Movements;
 using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Enemy
 {
     public class Target : MonoBehaviour
     {
         public static Action OnTargetDeath;
-        [Header("Targets configuration")] [SerializeField]
-        public Movement movement;
 
+        [Header("Targets configuration")] 
+        [SerializeField] public Movement movement;
         [SerializeField] private Transform chaseObjective;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float moveDistance = 5f;
         [SerializeField] private float health = 50f;
         [SerializeField] private Animator animator;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip recieveDamageSfx;
 
         [Header("Acceleration options")] [SerializeField]
         private float acceleration = 1f;
@@ -30,10 +31,16 @@ namespace Enemy
         private bool direction = true;
 
         private bool isMovementNotNull;
+
+        #region Animation
+        
         private bool isAttacking;
+        private bool isDying;
         private bool chase;
-        private const string AttackKey = "attack";
-        private static readonly int Attack = Animator.StringToHash(AttackKey);
+        private static readonly int Attack = Animator.StringToHash("attack");
+        private static readonly int Death = Animator.StringToHash("death");
+        
+        #endregion
 
         private void Awake()
         {
@@ -60,8 +67,11 @@ namespace Enemy
         private void Update()
         {
             if (isMovementNotNull)
-                movement.Move(transform, chase ? chaseObjective.position : originalPosition, ref direction, speed, 
+            {
+                movement.Move(transform, chase ? chaseObjective.position : originalPosition, ref direction, speed,
                     moveDistance, ref distanceTraveled, acceleration, originalSpeed, maxSpeed, animator);
+                
+            }
         }
 
         /// <summary>
@@ -71,8 +81,9 @@ namespace Enemy
         public void TakeDamage(float amount)
         {
             health -= amount;
+            audioSource?.PlayOneShot(recieveDamageSfx);
             
-            if (health <= 0)
+            if (health <= 0 && !isDying)
             {
                 Die();
             }
@@ -80,7 +91,7 @@ namespace Enemy
 
         public void StartAttack()
         {
-            if(!isAttacking) StartCoroutine(EndAttack());
+            if (!isAttacking) StartCoroutine(EndAttack());
         }
 
         private IEnumerator EndAttack()
@@ -103,6 +114,30 @@ namespace Enemy
         private void Die()
         {
             OnTargetDeath?.Invoke();
+             
+            if (animator != null)
+            {
+                StartCoroutine(DeathAnimation());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private IEnumerator DeathAnimation()
+        {
+            const float deathDuration = 1.5f;
+
+            isDying = true;
+            animator.SetBool(Death, true);
+            
+            gameObject.GetComponent<Enemy>().enabled = false;
+            
+            yield return new WaitForSeconds(deathDuration);
+
+            isDying = false;
+            
             Destroy(gameObject);
         }
     }
