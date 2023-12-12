@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 namespace Audio
 {
+    /// <summary>
+    /// SoundEventListener registers itself as a listener to its SoundEvents when enabled, and unregisters when disabled.
+    /// </summary>
     public class SoundEventListener : MonoBehaviourSingleton<SoundEventListener>
     {
         [System.Serializable]

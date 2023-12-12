@@ -6,6 +6,11 @@ using UnityEngine.UIElements;
 
 namespace Weapons
 {
+    /// <summary>
+    /// The RaycastWeapon class manages the behavior of a raycast weapon.
+    /// The class includes methods for shooting, which casts a ray forward from the camera's position and deals damage
+    /// if it hits a target, and showing the laser.
+    /// </summary>
     public class RaycastWeapon : Weapon
     {
         [Header("Raycast")] 

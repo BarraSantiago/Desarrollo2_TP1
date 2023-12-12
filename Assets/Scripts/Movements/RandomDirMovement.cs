@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Movements
 {
+    /// <summary>
+    /// Random direction movement represents the moving in a random direction variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Random")]
     public class RandomDirMovement : Movement
     {

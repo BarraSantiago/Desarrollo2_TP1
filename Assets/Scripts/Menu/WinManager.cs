@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 namespace Menu
 {
+    
+    /// <summary>
+    /// The WinManager class manages the game's win state.
+    /// It listens for the OnWinEvent from the GameManager, and when this event is triggered, it activates the game won menu.
+    /// </summary>
     public class WinManager : MonoBehaviour
     {
         [SerializeField] private GameObject gameWonMenu;

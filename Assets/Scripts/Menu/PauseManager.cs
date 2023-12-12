@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 namespace Menu
 {
+    /// <summary>
+    /// PauseManager class manages the pause state of the game.
+    /// It provides methods to pause and resume the game, change the mouse state, load scenes, and quit the application.
+    /// </summary>
     public class PauseManager : MonoBehaviour
     {
         private const float NormalTimeScale = 1;

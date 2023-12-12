@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Random movement represents the teleportation to a random place variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Random")]
     public class RandomMovement : Movement
     {

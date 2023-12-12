@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Weapons
 {
+    /// <summary>
+    /// The WeaponContainer class manages a collection of weapons in a Unity game.
+    /// It maintains a dictionary mapping weapon IDs to Weapon objects, and an array of GameObjects representing the weapons.
+    /// </summary>
     public class WeaponContainer : MonoBehaviour
     {
         private Dictionary<int, Weapon> idWeapons;

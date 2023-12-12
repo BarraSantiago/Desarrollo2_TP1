@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Enemy
 {
+    /// <summary>
+    /// The Target class represents an enemy target in the game.
+    /// It manages the target's movements, health, and attack behaviors, and plays sound effects for damage received.
+    /// </summary>
     public class Target : MonoBehaviour
     {
         public static Action OnTargetDeath;
@@ -77,7 +81,7 @@ namespace Enemy
         /// <summary>
         /// Modify target's health
         /// </summary>
-        /// <param name="amount"></param>
+        /// <param name="amount"> amount of damage to take </param>
         public void TakeDamage(float amount)
         {
             health -= amount;
@@ -89,11 +93,17 @@ namespace Enemy
             }
         }
 
+        /// <summary>
+        /// Initiates the target's attack sequence.
+        /// </summary>
         public void StartAttack()
         {
             if (!isAttacking) StartCoroutine(EndAttack());
         }
 
+        /// <summary>
+        /// Ends the target's attack after a delay.
+        /// </summary>
         private IEnumerator EndAttack()
         {
             float delay = 0.5f;
@@ -125,6 +135,9 @@ namespace Enemy
             }
         }
 
+        /// <summary>
+        /// Plays the target's death animation and destroys the target after a delay.
+        /// </summary>
         private IEnumerator DeathAnimation()
         {
             const float deathDuration = 1.5f;

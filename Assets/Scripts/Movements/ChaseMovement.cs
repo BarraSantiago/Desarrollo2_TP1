@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Video;
 
 namespace Movements
 {
     
+    /// <summary>
+    /// Chase movement represents the chasing an object variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Chase")]
     public class ChaseMovement : Movement
     {

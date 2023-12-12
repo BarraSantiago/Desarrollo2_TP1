@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Horizontal movement represents the only horizontal move variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Horizontal")]
     public class HorizontalMovement : Movement
     {

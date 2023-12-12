@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Weapons
 {
+    /// <summary>
+    /// The Weapon class is an abstract class that serves as a base for different types of weapons the game.
+    /// The class includes methods for shooting, reloading, bullet shot reaction, and checking if the weapon can shoot.
+    /// </summary>
     public abstract class Weapon : MonoBehaviour
     {
         public abstract void Shoot();

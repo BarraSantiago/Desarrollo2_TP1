@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Static movement represents the no move or static move variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Static")]
     public class StaticMovement : Movement
     {

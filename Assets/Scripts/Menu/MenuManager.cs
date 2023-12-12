@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 namespace Menu
 {
+    /// <summary>
+    /// MenuManager class provides methods to load the game scene, quit the application, and load scenes by index or name.
+    /// </summary>
     public class MenuManager : MonoBehaviour
     {
         private const string SceneName = "Tutorial";
@@ -23,9 +26,15 @@ namespace Menu
             Application.Quit();
         }
 
+        /// <summary>
+        /// Loads a scene by the index introduced
+        /// </summary>
+        /// <param name="index"> Index of scene to load </param>
         public void LoadSceneByIndex(int index)
         { 
             const float normalTimeScale = 1;
+            
+            if(index > SceneManager.sceneCount || index < 0) return;
             
             Time.timeScale = normalTimeScale;
             

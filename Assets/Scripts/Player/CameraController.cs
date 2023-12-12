@@ -1,9 +1,11 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
+    /// <summary>
+    /// The CameraController class manages the camera movement in the game.
+    /// It rotates the camera based on mouse input, allowing the player to look around in the game world.
+    /// </summary>
     public class CameraController : MonoBehaviour
     {
         [SerializeField] private float sensitivityX;

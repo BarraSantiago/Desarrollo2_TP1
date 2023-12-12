@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Vertical movement represents the vertical move variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Vertical")]
     public class VerticalMovement : Movement
     {

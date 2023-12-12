@@ -1,10 +1,12 @@
-using System;
 using Game;
 using Player;
 using UnityEngine;
 
 namespace Audio
 {
+    /// <summary>
+    /// Global audio manager that manages all 2D sound effects
+    /// </summary>
     public class AudioManager : MonoBehaviourSingleton<AudioManager>
     {
         [SerializeField] private AudioSource audioSource;

@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Acceleration movement represents the acceleration variation of the movement class
+    /// </summary>
     [CreateAssetMenu(fileName = "movement", menuName = "movements/Acceleration")]
     public class AccelerationMovement : Movement
     {
@@ -31,8 +34,6 @@ namespace Movements
             speed += acceleration * Time.deltaTime;
             speed = Mathf.Clamp(speed, ogSpeed, maxSpeed);
             distanceTraveled += speed * Time.deltaTime;
-
-           
         }
     }
 }

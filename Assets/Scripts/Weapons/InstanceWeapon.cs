@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Weapons
 {
+    /// <summary>
+    /// The InstanceWeapon class manages the behavior of instance weapons.
+    /// The class includes methods for shooting, spawning bullets, and setting bullets inactive after a certain duration.
+    /// It also maintains a bullet pool for efficient bullet instantiation and a spray pattern for bullet deviation.
+    /// </summary>
     public class InstanceWeapon : Weapon
     {
         [Header("Instance")] 

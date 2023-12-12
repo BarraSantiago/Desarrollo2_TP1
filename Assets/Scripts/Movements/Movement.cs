@@ -2,6 +2,9 @@
 
 namespace Movements
 {
+    /// <summary>
+    /// Movement interface to make many types movements
+    /// </summary>
     public abstract class Movement : ScriptableObject
     {
         /// <summary>

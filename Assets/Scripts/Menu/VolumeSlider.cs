@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace Menu
 {
+    /// <summary>
+    /// The VolumeSlider class manages the volume control.
+    /// </summary>
     public class VolumeSlider : MonoBehaviour
     {
         [SerializeField] private AudioMixer mainMixer;

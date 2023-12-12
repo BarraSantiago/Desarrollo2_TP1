@@ -1,9 +1,11 @@
-using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Weapons
 {
+    /// <summary>
+    /// The Pickable class manages the behavior of pickable weapons.
+    /// The class includes methods for picking up and dropping weapons.
+    /// </summary>
     public class Pickable : MonoBehaviour
     {
         [SerializeField] private Transform gunContainer;

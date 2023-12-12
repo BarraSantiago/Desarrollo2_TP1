@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using Enemy;
-using Player;
 using TMPro;
 using UnityEngine;
 using Weapons;
 
-namespace UI
+namespace Player
 {
+    /// <summary>
+    /// The PlayerUI class manages the user interface for the player.
+    /// </summary>
     public class PlayerUI : MonoBehaviour
     {
         public static Action OnNoTargets;
@@ -104,6 +106,10 @@ namespace UI
             bulletsCounter.text = weaponContainer.GetWeapon()?.Bullets + "/" + weaponContainer.GetWeapon()?.MaxBullets;
         }
 
+        /// <summary>
+        /// This method spawns a text object that flies up when receiving damage.
+        /// </summary>
+        /// <param name="text"> The amount of damage received. </param>
         private void SpawnFlyingText(float text)
         {
             foreach (GameObject flyingText in flyingTextPool)
@@ -120,6 +126,10 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// This coroutine deactivates the flying text object after a delay.
+        /// </summary>
+        /// <param name="text"> The text object to deactivate. </param>
         private IEnumerator DeactivateText(GameObject text)
         {
             const float delay = 2;

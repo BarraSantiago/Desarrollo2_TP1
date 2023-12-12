@@ -6,6 +6,10 @@ using Weapons;
 
 namespace Player
 {
+    /// <summary>
+    /// The InputManager class centralizes the handling of player inputs.
+    /// It defines a series of static Action events that are invoked in response to specific player actions.
+    /// </summary>
     public class InputManager : MonoBehaviour
     {
         #region Events
