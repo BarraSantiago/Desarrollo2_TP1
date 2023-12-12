@@ -111,8 +111,8 @@ namespace UI
                 if (flyingText.activeSelf) continue;
 
                 flyingText.SetActive(true);
-                flyingText.transform.SetParent(flyingTextSpawnPoint.transform);
-                
+                flyingText.transform.SetParent(gameObject.transform);
+                flyingText.transform.position = flyingTextSpawnPoint.transform.position;
                 flyingText.GetComponent<TMP_Text>().text = "-" + text.ToString("N1");
                 
                 StartCoroutine(DeactivateText(flyingText));

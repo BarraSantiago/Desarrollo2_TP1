@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Audio;
 using Enemy;
 using UnityEngine;
 
@@ -15,16 +16,17 @@ namespace Player
         public float Timer { get; set; }
 
         public static Action OnDefeatEvent;
-        public static Action OnRecieveDamageEvent;
+        public static Action<float> OnRecieveDamageEvent;
 
-        [Header("Player settings")] [SerializeField]
-        private float sprintingSpeed = 13.0f;
+        [Header("Player settings")] 
+        [SerializeField] private float sprintingSpeed = 13.0f;
 
         [SerializeField] private float walkingSpeed = 8.0f;
         [SerializeField] private float flashSpeedMultiplier = 3.0f;
         [SerializeField] private float invulnerabilityTimer = 0.2f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private CharacterController characterController;
+        [SerializeField] private SoundEvent onDamaged;
 
         [SerializeField] private bool startTimer = true;
         [SerializeField] private int levelTimer = 30;
@@ -42,14 +44,14 @@ namespace Player
         {
             InputManager.OnFlashEvent += FlashMode;
             InputManager.OnGodModeEvent += GodMode;
-            MeleeAttack.OnDealDamageEvent += RecieveDamage;
+            EnemyAttack.OnDealDamageEvent += RecieveDamage;
         }
 
         private void OnDisable()
         {
             InputManager.OnFlashEvent -= FlashMode;
             InputManager.OnGodModeEvent -= GodMode;
-            MeleeAttack.OnDealDamageEvent -= RecieveDamage;
+            EnemyAttack.OnDealDamageEvent -= RecieveDamage;
         }
 
         private void Start()
@@ -126,11 +128,9 @@ namespace Player
         /// <returns></returns>
         private IEnumerator TimerCoroutine()
         {
-            if (isGodMode) yield break;
-
             while (Timer > 0)
             {
-                Timer -= Time.deltaTime;
+                Timer -= isGodMode ? 0 : Time.deltaTime;
                 yield return null;
             }
 
@@ -149,7 +149,8 @@ namespace Player
             if (!isInvulnerable && !isGodMode)
             {
                 Timer -= damage;
-                OnRecieveDamageEvent?.Invoke();
+                onDamaged.Raise();
+                OnRecieveDamageEvent?.Invoke(damage);
                 
                 StartCoroutine(Invulnerability());
             }
