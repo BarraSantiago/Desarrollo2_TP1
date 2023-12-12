@@ -34,7 +34,7 @@ namespace Menu
         { 
             const float normalTimeScale = 1;
             
-            if(index > SceneManager.sceneCount || index < 0) return;
+            if(index > SceneManager.sceneCountInBuildSettings || index < 0) return;
             
             Time.timeScale = normalTimeScale;
             
