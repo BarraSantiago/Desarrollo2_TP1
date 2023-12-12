@@ -24949,8 +24949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f93ca94fe6e95a4599e5c9a01ce2a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimer: 1
-  levelTimer: 45
 --- !u!4 &1953752300
 Transform:
   m_ObjectHideFlags: 0
@@ -27949,14 +27947,48 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7178914108686686703, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7178914108704902139, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 8552921364691488969}
     - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 7025749540019815012}
+    - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1953752299}
+    - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: flyingTextPrefab
+      value: 
+      objectReference: {fileID: 4043434584725158723, guid: 0b94ac84dc6ef004fb0442e53d6c6233, type: 3}
+    - target: {fileID: 7178914108704902141, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: flyingTextSpawnPoint
+      value: 
+      objectReference: {fileID: 7178914108460313916}
+    - target: {fileID: 7178914108715870196, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914108829168491, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_text
+      value: 'Next Level
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914108829168491, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_fontSize
+      value: 41.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914108829168491, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7178914109264872106, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
       propertyPath: m_Name
       value: GameMenusCanvas
@@ -28057,6 +28089,38 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Menu.VolumeSlider, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 7178914109721923221, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111928, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_Name
+      value: NextLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111929, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111930, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111930, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7178914108460313915}
+    - target: {fileID: 7178914109876111930, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadSceneByIndex
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111930, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Menu.MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178914109876111930, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7178914110090668730, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -28072,12 +28136,34 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5968195129088894485, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
   m_PrefabInstance: {fileID: 7178914108460313912}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7178914108460313914}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a93eb8538a6568f4aa49f446526ab4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7178914108460313914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7178914108704902137, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+  m_PrefabInstance: {fileID: 7178914108460313912}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7178914108460313915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178914108460313914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57701d051cc16d46bf47ef332b456d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7178914108460313916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7178914109874227107, guid: 5c029f678d16a634cadbb01ddf465f1e, type: 3}
+  m_PrefabInstance: {fileID: 7178914108460313912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8552921364691488969 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7596594544641935260, guid: 7889f089da8201545b838e30b1ed16c5, type: 3}
