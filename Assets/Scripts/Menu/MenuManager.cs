@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Menu
 {
@@ -23,6 +21,15 @@ namespace Menu
         public void OnExitButtonClick()
         {
             Application.Quit();
+        }
+
+        public void LoadSceneByIndex(int index)
+        { 
+            const float normalTimeScale = 1;
+            
+            Time.timeScale = normalTimeScale;
+            
+            SceneManager.LoadScene(index);
         }
 
         /// <summary>
