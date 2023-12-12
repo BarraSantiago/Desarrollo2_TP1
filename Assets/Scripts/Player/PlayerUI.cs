@@ -1,25 +1,29 @@
 using System;
+using System.Collections;
 using Enemy;
-using Game;
 using Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Weapons;
 
 namespace UI
 {
     public class PlayerUI : MonoBehaviour
     {
         public static Action OnNoTargets;
-        
+
         [SerializeField] private TMP_Text timer;
         [SerializeField] private TMP_Text targetsRemaining;
         [SerializeField] private TMP_Text bulletsCounter;
+        [SerializeField] private GameObject flyingTextPrefab;
+        [SerializeField] private GameObject flyingTextSpawnPoint;
         [SerializeField] private PlayerController player;
 
         private int targetAmount;
         private bool isPlayerNull;
         private WeaponContainer weaponContainer;
+        private GameObject[] flyingTextPool;
+        private const int textPoolSize = 10;
 
         private void Start()
         {
@@ -32,9 +36,17 @@ namespace UI
             InputManager.OnPickUpEvent += ShowBullets;
             InputManager.OnDropEvent += ShowBullets;
             InputManager.OnSwapWeaponEvent += ShowBullets;
+            PlayerController.OnRecieveDamageEvent += SpawnFlyingText;
 
             targetAmount = GameObject.FindGameObjectsWithTag("Target").Length;
             ShowTargetsRemaining();
+            flyingTextPool = new GameObject[textPoolSize];
+
+            for (int i = 0; i < flyingTextPool.Length; i++)
+            {
+                flyingTextPool[i] = Instantiate(flyingTextPrefab);
+                flyingTextPool[i].SetActive(false);
+            }
         }
 
         private void OnDestroy()
@@ -45,6 +57,7 @@ namespace UI
             InputManager.OnPickUpEvent -= ShowBullets;
             InputManager.OnDropEvent -= ShowBullets;
             InputManager.OnSwapWeaponEvent -= ShowBullets;
+            PlayerController.OnRecieveDamageEvent -= SpawnFlyingText;
         }
 
         private void Update()
@@ -57,7 +70,7 @@ namespace UI
         /// </summary>
         private void ShowTimer()
         {
-            if(isPlayerNull) return;
+            if (isPlayerNull) return;
             if (player.Timer < 0) timer.text = "";
             timer.text = player.Timer.ToString("0.#");
         }
@@ -87,7 +100,33 @@ namespace UI
                 bulletsCounter.text = "";
                 return;
             }
+
             bulletsCounter.text = weaponContainer.GetWeapon()?.Bullets + "/" + weaponContainer.GetWeapon()?.MaxBullets;
+        }
+
+        private void SpawnFlyingText(float text)
+        {
+            foreach (GameObject flyingText in flyingTextPool)
+            {
+                if (flyingText.activeSelf) continue;
+
+                flyingText.SetActive(true);
+                flyingText.transform.SetParent(flyingTextSpawnPoint.transform);
+                
+                flyingText.GetComponent<TMP_Text>().text = "-" + text.ToString("N1");
+                
+                StartCoroutine(DeactivateText(flyingText));
+                break;
+            }
+        }
+
+        private IEnumerator DeactivateText(GameObject text)
+        {
+            const float delay = 2;
+
+            yield return new WaitForSeconds(delay);
+            
+            text.SetActive(false);
         }
     }
 }
