@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Audio;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Weapons
 {
@@ -11,12 +10,13 @@ namespace Weapons
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject gunHitbox;
 
-        [Header("Stats")]
+        [Header("Stats")] 
+        [SerializeField] private bool isEquipped = false;
         [SerializeField] private int maxBullets = 30;
         [SerializeField] private float bulletSpeed = 600.0f;
         [SerializeField] private int id = 0;
         [SerializeField] private float bulletDuration = 1;
-        
+
         [Header("Events")] 
         [SerializeField] private SoundEvent onInstanceShotEvent;
         [SerializeField] private SoundEvent onEmptyMagazineEvent;
@@ -24,6 +24,30 @@ namespace Weapons
 
         private const int MaxBulletPool = 30;
         private GameObject[] bulletPool;
+
+        #region BulletSprayPattern
+
+        private int currentBulletIndex = 0;
+
+        /// <summary>
+        /// Deviation spray pattern for bullets
+        /// </summary>
+        private readonly Vector3[] sprayPattern =
+        {
+            new Vector3(.05f, 0.05f, 0f),
+            new Vector3(.01f, -.05f, 0f),
+            new Vector3(.01f, 0.08f, 0f),
+            new Vector3(-.03f, 0.03f, 0f),
+            new Vector3(-.05f, 0.05f, 0f),
+            new Vector3(-.05f, -0.05f, 0f),
+            new Vector3(-.05f, 0f, 0f),
+            new Vector3(.08f, 0f, 0f),
+            new Vector3(0f, -0.05f, 0f),
+            new Vector3(-0.05f, 0.05f, 0f)
+        };
+
+        #endregion
+
         private void Awake()
         {
             Id = id;
@@ -32,7 +56,8 @@ namespace Weapons
             OnReload = onReloadEvent;
             OnEmptyMagazine = onEmptyMagazineEvent;
             OnShot = onInstanceShotEvent;
-
+            Equipped = isEquipped;
+            
             bulletPool = new GameObject[MaxBulletPool];
 
             for (int i = 0; i < bulletPool.Length; i++)
@@ -49,9 +74,11 @@ namespace Weapons
         {
             if (!CanShoot()) return;
             BulletShot();
+            Vector3 sprayDeviation = sprayPattern[currentBulletIndex];
+            currentBulletIndex = (currentBulletIndex + 1) % sprayPattern.Length;
             
-            SpawnBullet(out GameObject bullet);
-            
+            SpawnBullet(out GameObject bullet, sprayDeviation);
+
             StartCoroutine(SetBulletInactive(bullet));
         }
 
@@ -59,15 +86,15 @@ namespace Weapons
         /// Instantiates a bullet infront of the gun hitbox going forward.
         /// </summary>
         /// <param name="bullet"> reference to instantiate bullet </param>
-        private void SpawnBullet(out GameObject bullet)
+        private void SpawnBullet(out GameObject bullet, Vector3 deviation)
         {
             bool instanciated = false;
             bullet = null;
-            
+
             foreach (GameObject bulletP in bulletPool)
             {
                 if (bulletP.activeSelf) continue;
-                
+
                 bullet = bulletP;
                 instanciated = true;
                 break;
@@ -77,15 +104,21 @@ namespace Weapons
             {
                 bullet = Instantiate(bulletPrefab);
             }
-            
+
             bullet.SetActive(true);
-            
+
             bullet.transform.position = gunHitbox.transform.position;
             bullet.transform.rotation = transform.rotation;
-            bullet.transform.Rotate(0,0,-90);
-            bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            bullet.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            bullet.GetComponent<Rigidbody>()?.AddForce(gunHitbox.transform.forward * bulletSpeed);
+            bullet.transform.Rotate(0, 0, -90);
+            
+            Rigidbody bulletRigidb = bullet.GetComponent<Rigidbody>();
+            bulletRigidb.velocity = Vector3.zero;
+            bulletRigidb.angularVelocity = Vector3.zero;
+            
+            Vector3 bulletDevi =  new (gunHitbox.transform.forward.x + deviation.x, gunHitbox.transform.forward.y + 
+                deviation.y, gunHitbox.transform.forward.z + deviation.z);
+            
+            bulletRigidb.AddForce(bulletDevi * bulletSpeed);
         }
 
         /// <summary>
@@ -95,9 +128,8 @@ namespace Weapons
         private IEnumerator SetBulletInactive(GameObject bullet)
         {
             yield return new WaitForSeconds(bulletDuration);
-            
+
             bullet.SetActive(false);
         }
-
     }
 }

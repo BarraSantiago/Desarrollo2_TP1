@@ -39,7 +39,7 @@ namespace Weapons
         protected void BulletShot()
         {
             Bullets--;
-            OnShot.Raise();
+            OnShot?.Raise();
         }
 
         /// <summary>
